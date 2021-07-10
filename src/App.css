@@ -1,38 +1,259 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+.jumbotron {
+  height: 100px;
+  margin: 0px !important;
+  background-color: black !important;
   color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.title-container {
+  width: 350px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border-bottom: 2px solid black;
+  text-align: center;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.title {
+  font-family: "Alegreya Sans";
+}
+
+body {
+  font-family: "Alegreya SC";
+  font-size: 18px;
+}
+
+.btn {
+  font-size: 18px;
+  background-color: white;
+  color: black;
+}
+
+.navbar {
+  background-color: black;
+}
+
+.link {
+  color: black;
+}
+
+.site-footer {
+  margin-top: 30px;
+  background-color: black;
+  color: white;
+  padding: 20px;
+}
+
+.meal-type-button {
+  background-color: rgb(215, 242, 250);
+  margin: 5px;
+}
+
+.navbar {
+  background-color: rgb(215, 242, 250);
+}
+
+.nav-link {
+  color: black;
+}
+
+/*RECIPE PAGE*/
+
+.add-recipe-modal {
+  width: 800px;
+}
+
+.modal-header {
+}
+
+/*.add-recipe-modal .modal-title {
+  text-align: center;
+}
+
+.modal-header {
+  text-align: center;
+}*/
+
+.meal-buttons-col {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.add-recipe-butt {
+  margin-left: 5px;
+  background-color: white;
+  color: black;
+}
+
+.recipe-img {
+  height: 150px;
+  width: auto;
+  object-fit: cover;
+}
+
+.recipe-card {
+  max-width: 300px;
+  margin-bottom: 20px;
+}
+
+.recipe-container-sm {
+  width: 90%;
+}
+.recipe-img-sm {
+  height: auto;
+  max-width: 200px;
+  margin-right: 15px;
+}
+
+.recipe-box-sm {
+  border: 1px rgb(196, 190, 190) solid;
+  padding-left: 0px;
+  margin-top: 15px;
+}
+
+.recipe-sm-body {
+  padding-top: 15px;
+  color: black;
+}
+
+.recipe-container-big {
+}
+
+.favorite-butt {
+  color: black;
+  position: absolute;
+  right: 0px;
+  bottom: 0px;
+  margin-bottom: 5px;
+  margin-right: 8px;
+}
+
+.blog-container {
+  max-width: 750px;
+}
+
+.post-row {
+  border: 1px rgb(196, 190, 190) solid;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.create-post-butt {
+  margin-bottom: 15px;
+}
+
+#post-header-line {
+  /*border: solid black 1px;*/
+  border-bottom: solid grey 1px; /*maybe $grey-border ?? */
+  margin-bottom: 10px;
+}
+
+.post-row h4 {
+  margin: 0;
+}
+
+.post-date {
+  color: dark grey;
+  font-size: 13px;
+  height: 25px;
+}
+
+.create-post-modal {
+  padding: 10px;
+}
+.create-post-row {
+  margin-top: 10px;
+}
+
+.create-post-header {
+}
+
+.modal-header {
+  text-align: center;
+}
+
+/*YOUR PAGE*/
+
+.user-info-table {
+}
+
+.user-info-container {
+  max-width: 60%;
+}
+
+/*MAIN PAGE */
+.main-page-card {
+  text-align: center;
+  border: none;
+}
+
+.main-page-row {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.main-page-container {
+  max-width: 90%;
+  min-width: 200px;
+}
+
+.main-page-container p {
+  font-size: 20px;
+}
+
+.card-header-main {
+  /*
+  background-color: white;
+  border: none;*/
+}
+
+.get-started-button {
+  width: 200px;
+  height: 50px;
+  border: thin solid black;
+  background-color: white;
+  color: black;
+  font-size: 20px;
+  font-weight: bold;
+}
+
+/*MEALPLAN */
+.mealplan-container {
+  max-width: 95%;
+  margin-top: 30px;
+}
+
+.mealplan-day-row {
+  margin-bottom: 50px;
+}
+
+.tab {
+  width: 20%;
+  background-color: rgb(199, 232, 253);
+  border: 1px rgb(196, 190, 190) solid;
+  border-radius: 5px;
+}
+
+.tab-content {
+  border: 1px rgb(196, 190, 190) solid;
+  border-radius: 5px;
+  border-top: none;
+}
+
+.mealplan-recipe-img {
+  height: auto;
+  max-width: 200px;
+  margin: 2px;
+  margin-right: 8px;
+}
+
+.edit-mealplan-recipe-butt {
+  border: none;
+  float: right;
+
+  font-weight: bold;
+}
+
+.media-body {
+  padding: 5px;
 }
