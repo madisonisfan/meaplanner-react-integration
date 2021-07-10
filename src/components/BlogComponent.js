@@ -60,12 +60,12 @@ function MainBlogPage({
 
 function RenderPost({ post }) {
   return (
-    <Row className="post-row" key={post.id}>
+    <Row className="post-row" key={post._id}>
       <Col xs={12}>
-        <h4>{post.author}</h4>
+        <h4>{post.postCreator.username}</h4>
       </Col>
       <Col className="post-date" xs={12}>
-        <p>{post.date}</p>
+        <p>{post.postDate}</p>
       </Col>
       <Col xs={12}>
         <p>{post.postContent}</p>

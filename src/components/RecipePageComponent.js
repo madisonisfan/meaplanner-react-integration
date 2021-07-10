@@ -277,7 +277,6 @@ class AddRecipeForm extends Component {
 function RenderButtons({ mealTypes, postRecipe }) {
   return (
     <React.Fragment>
-      
       {mealTypes.map((type) => (
         <Button className="meal-type-button" key={type.id}>
           <Link style={{ color: "black" }} to={`/recipes/${type.mealType}`}>
@@ -298,18 +297,18 @@ function RenderRecipeCard({ recipes }) {
       <React.Fragment>
         {recipes.map((recipe) => {
           return (
-            <React.Fragment key={recipe.id}>
+            <React.Fragment key={recipe._id}>
               <div className="col-4 col-lg-3 d-none d-md-block">
                 <Card className="recipe-card mx-auto">
                   <img
                     class="card-img-top recipe-img"
-                    src={baseUrl + recipe.image}
+                    src={baseUrl + recipe.imageUrl}
                   />
                   <CardBody>
                     <Link style={{ color: "black" }}>
-                      <h5>{recipe.name}</h5>
+                      <h5>{recipe.recipeName}</h5>
                     </Link>
-                    <p>{recipe.description}</p>
+                    <p>{recipe.recipeDescription}</p>
                     <Link className="favorite-butt" style={{ color: "black" }}>
                       <i className="fa fa-star" />
                       Favorite

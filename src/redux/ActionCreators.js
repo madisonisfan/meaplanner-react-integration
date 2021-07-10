@@ -6,6 +6,7 @@ import { USERINFO } from "../shared/userInfo";
 import { USERMEALPLAN } from "../shared/mealplan";
 import { baseUrl } from "../shared/baseUrl";
 
+/*
 export const fetchPosts = () => (dispatch) => {
   dispatch(postsLoading());
 
@@ -13,6 +14,32 @@ export const fetchPosts = () => (dispatch) => {
     dispatch(addPosts(POSTS));
     //console.log(`POSTS from act creators:${POSTS}`);
   }, 2000);
+};*/
+
+export const fetchPosts = () => (dispatch) => {
+  dispatch(recipesLoading());
+
+  return fetch(baseUrl + "posts")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error: ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then((response) => response.json())
+    .then((posts) => dispatch(addPosts(posts)))
+    .catch((error) => dispatch(postsFailed(error.message)));
 };
 
 export const addPosts = (posts) => ({
