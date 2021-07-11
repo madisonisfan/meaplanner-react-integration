@@ -18,7 +18,13 @@ import { Link } from "react-router-dom";
 import { LocalForm, Control } from "react-redux-form"; //Errors
 import { baseUrl } from "../shared/baseUrl";
 
-function MainRecipePage({ selectedType, mealTypes, recipes, postRecipe }) {
+function MainRecipePage({
+  selectedType,
+  mealTypes,
+  recipes,
+  postRecipe,
+  auth,
+}) {
   console.log(`selected Type ${selectedType}`);
   return (
     <React.Fragment>
@@ -26,7 +32,11 @@ function MainRecipePage({ selectedType, mealTypes, recipes, postRecipe }) {
       <div className="container-fluid">
         <div className="row">
           <div className="col meal-buttons-col">
-            <RenderButtons mealTypes={mealTypes} postRecipe={postRecipe} />
+            <RenderButtons
+              mealTypes={mealTypes}
+              postRecipe={postRecipe}
+              auth={auth}
+            />
           </div>
         </div>
       </div>
@@ -274,7 +284,7 @@ class AddRecipeForm extends Component {
     );
   }
 }
-function RenderButtons({ mealTypes, postRecipe }) {
+function RenderButtons({ mealTypes, postRecipe, auth }) {
   return (
     <React.Fragment>
       {mealTypes.map((type) => (
@@ -284,8 +294,8 @@ function RenderButtons({ mealTypes, postRecipe }) {
           </Link>
         </Button>
       ))}
-      <AddRecipeForm postRecipe={postRecipe} />
-      <Button>My Favorites</Button>
+      {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
+      {auth.isAuthenticated ? <Button>My Favorites</Button> : null}
     </React.Fragment>
   );
 }

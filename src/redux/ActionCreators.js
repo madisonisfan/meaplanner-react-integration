@@ -42,6 +42,40 @@ export const fetchPosts = () => (dispatch) => {
     .catch((error) => dispatch(postsFailed(error.message)));
 };
 
+export const deletePost = (postId) => (dispatch) => {
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return fetch(baseUrl + "posts/" + postId, {
+    method: "DELETE",
+    headers: {
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((posts) => {
+      console.log("Post Deleted", posts);
+      dispatch(addPosts(posts));
+    })
+    .catch((error) => dispatch(postsFailed(error.message)));
+};
+
 export const addPosts = (posts) => ({
   type: ActionTypes.ADD_POSTS,
   payload: posts,
@@ -58,13 +92,47 @@ export const postsLoading = () => ({
 
 export const postNewPost = (postType, postContent) => (dispatch) => {
   const newPost = {
-    postType: postType,
-    postContent: postContent,
+    postType,
+    postContent,
   };
-  newPost.date = new Date().toISOString();
-  newPost.author = "random author";
 
-  dispatch(addPost(newPost));
+  newPost.postDate = new Date().toISOString();
+
+  console.log("Post", newPost);
+
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return fetch(baseUrl + "posts", {
+    method: "POST",
+    body: JSON.stringify(newPost),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((response) => dispatch(addPost(response)))
+    .catch((error) => {
+      console.log("post post", error.message);
+      alert("Your post could not be posted\nError: " + error.message);
+    });
 };
 
 export const addPost = (post) => ({
@@ -122,9 +190,9 @@ export const addRecipes = (recipes) => ({
 });
 
 export const postRecipe = (
-  name,
-  description,
-  recipeType,
+  recipeName,
+  recipeDescription,
+  mealType,
   servings,
   calories,
   cooktime,
@@ -132,12 +200,13 @@ export const postRecipe = (
   ingredients,
   instructions
 ) => (dispatch) => {
-  //alert("post recipe");
+  console.log(mealType);
+  // let submittedMealType
 
   const newRecipe = {
-    name,
-    description,
-    recipeType,
+    recipeName,
+    recipeDescription,
+    mealType,
     servings,
     calories,
     cooktime,
@@ -146,15 +215,21 @@ export const postRecipe = (
     instructions,
   };
 
-  newRecipe.date = new Date().toISOString().date;
-  newRecipe.image = "images/food2.jpg";
+  newRecipe.recipeDate = new Date().toISOString().date;
+  newRecipe.imageUrl = "images/food2.jpg";
+
+  console.log("Comment ", newRecipe);
+
+  const bearer = "Bearer " + localStorage.getItem("token");
 
   return fetch(baseUrl + "recipes", {
     method: "POST",
     body: JSON.stringify(newRecipe),
     headers: {
       "Content-Type": "application/json",
+      Authorization: bearer,
     },
+    credentials: "same-origin",
   })
     .then((response) => {
       if (response.ok) {

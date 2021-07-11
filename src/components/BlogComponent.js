@@ -4,6 +4,7 @@ import { Row, Col, Button, Modal, ModalHeader } from "reactstrap";
 import { LocalForm, Control } from "react-redux-form"; // Errors
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
+import { Auth } from "../redux/auth";
 
 function MainBlogPage({
   posts,
@@ -11,12 +12,14 @@ function MainBlogPage({
   postsErrMess,
   resetPostForm,
   addPost,
+  auth,
+  deletePost,
 }) {
   //console.log(`${posts.posts}`);
   console.log(`isloadingMAIN: ${postsLoading}`);
 
   const allPosts = posts.map((post) => {
-    return <RenderPost post={post} />;
+    return <RenderPost post={post} auth={auth} deletePost={deletePost} />;
   });
 
   if (postsLoading) {
@@ -45,7 +48,11 @@ function MainBlogPage({
       <div className="container-fluid text-center mx-auto">
         <Row>
           <Col xs={12}>
-            <AddPostForm resetPostForm={resetPostForm} addPost={addPost} />
+            <AddPostForm
+              auth={auth}
+              resetPostForm={resetPostForm}
+              addPost={addPost}
+            />
           </Col>
         </Row>
       </div>
@@ -58,7 +65,7 @@ function MainBlogPage({
   );
 }
 
-function RenderPost({ post }) {
+function RenderPost({ post, auth, deletePost }) {
   return (
     <Row className="post-row" key={post._id}>
       <Col xs={12}>
@@ -79,10 +86,24 @@ function RenderPost({ post }) {
       <Col xs={6} className="post-buttons">
         <Link style={{ color: "black" }}>Comment</Link>
       </Col>
+      <Col>
+        {auth.isAuthenticated &&
+        auth.user.username === post.postCreator.username ? (
+          <Button onClick={() => deletePost(post._id)}>Delete Post</Button>
+        ) : null}
+      </Col>
     </Row>
   );
 }
 
+/*
+<Col>
+        {auth.isAuthenticated &&
+        auth.user.username === post.postCreator.username ? (
+         <Button onClick={() => alert("hello")}>Delete Post</Button>
+        ) : null}
+      </Col>
+*/
 class AddPostForm extends Component {
   constructor(props) {
     super(props);
@@ -111,9 +132,12 @@ class AddPostForm extends Component {
   render() {
     return (
       <React.Fragment>
-        <Button className="create-post-butt" onClick={this.toggleModal}>
-          Want to post something?
-        </Button>
+        {this.props.auth.isAuthenticated ? (
+          <Button className="create-post-butt" onClick={this.toggleModal}>
+            Want to post something?
+          </Button>
+        ) : null}
+
         <Modal
           className="create-post-modal"
           isOpen={this.state.isModalOpen}

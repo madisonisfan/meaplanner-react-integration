@@ -9,11 +9,14 @@ import MainMealplanPage from "./MealPlanComponent";
 import {
   fetchPosts,
   postNewPost,
+  deletePost,
   fetchMealtypes,
   fetchRecipes,
   fetchUserInfo,
   postRecipe,
   fetchUserMealplan,
+  loginUser,
+  logoutUser,
 } from "../redux/ActionCreators";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -27,6 +30,7 @@ const mapStateToProps = (state) => {
     posts: state.posts,
     userInfo: state.userInfo,
     userMealplan: state.userMealplan,
+    auth: state.auth,
   };
 };
 
@@ -60,6 +64,9 @@ const mapDispatchToProps = {
     ),
   fetchUserInfo: () => fetchUserInfo(),
   fetchUserMealplan: () => fetchUserMealplan(),
+  loginUser: (creds) => loginUser(creds),
+  logoutUser: () => logoutUser(),
+  deletePost: (postId) => deletePost(postId),
 };
 
 class Main extends Component {
@@ -73,14 +80,22 @@ class Main extends Component {
 
   render() {
     const RecipeWithMealType = ({ match }) => {
-      const type = match.params.mealType;
+      let type = match.params.mealType;
+      console.log("1st type: ", type);
       const selectedTypeTitle = this.props.mealtypes.mealtypes
         .filter((typeObj) => typeObj.mealType === type)
         .map((typeObj) => typeObj.title);
 
+      if (type === "LunchDinner") {
+        type = "Lunch/Dinner";
+      }
+
+      console.log("2nd type: ", type);
+
       if (type === "allRecipes") {
         return (
           <MainRecipePage
+            auth={this.props.auth}
             selectedType="All Recipes"
             mealTypes={this.props.mealtypes.mealtypes}
             recipes={this.props.recipes.recipes}
@@ -90,10 +105,11 @@ class Main extends Component {
       } else {
         return (
           <MainRecipePage
+            auth={this.props.auth}
             selectedType={selectedTypeTitle}
             mealTypes={this.props.mealtypes.mealtypes}
             recipes={this.props.recipes.recipes.filter(
-              (recipe) => recipe.mealType === match.params.mealType
+              (recipe) => recipe.mealType === type
             )}
             postRecipe={this.props.postRecipe}
           />
@@ -101,9 +117,31 @@ class Main extends Component {
       }
     };
 
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route
+        {...rest}
+        render={(props) =>
+          this.props.auth.isAuthenticated ? (
+            <Component {...props} />
+          ) : (
+            <Redirect
+              to={{
+                pathname: "/home",
+                state: { from: props.location },
+              }}
+            />
+          )
+        }
+      />
+    );
+
     return (
       <React.Fragment>
-        <MainHeader />
+        <MainHeader
+          auth={this.props.auth}
+          loginUser={this.props.loginUser}
+          logoutUser={this.props.logoutUser}
+        />
         <Switch>
           <Route path="/home" component={Home} />
           <Route path="/recipes/:mealType" component={RecipeWithMealType} />
@@ -111,6 +149,8 @@ class Main extends Component {
             path="/blog"
             render={() => (
               <MainBlogPage
+                deletePost={this.props.deletePost}
+                auth={this.props.auth}
                 posts={this.props.posts.posts}
                 postsLoading={this.props.posts.isLoading}
                 postsErrMess={this.props.posts.errMess}
