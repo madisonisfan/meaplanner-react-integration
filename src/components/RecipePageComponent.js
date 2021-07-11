@@ -24,6 +24,7 @@ function MainRecipePage({
   recipes,
   postRecipe,
   auth,
+  postFavorite,
 }) {
   console.log(`selected Type ${selectedType}`);
   return (
@@ -42,7 +43,11 @@ function MainRecipePage({
       </div>
       <div className="container-fluid">
         <div className="row recipe-card-row">
-          <RenderRecipeCard recipes={recipes} />
+          <RenderRecipeCard
+            recipes={recipes}
+            postFavorite={postFavorite}
+            auth={auth}
+          />
         </div>
       </div>
     </React.Fragment>
@@ -295,12 +300,16 @@ function RenderButtons({ mealTypes, postRecipe, auth }) {
         </Button>
       ))}
       {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
-      {auth.isAuthenticated ? <Button>My Favorites</Button> : null}
+      {auth.isAuthenticated ? (
+        <Button>
+          <Link to={"/favorites"}>My Favorites</Link>
+        </Button>
+      ) : null}
     </React.Fragment>
   );
 }
 
-function RenderRecipeCard({ recipes }) {
+function RenderRecipeCard({ recipes, postFavorite, auth }) {
   //alert(`recipes: ${recipes.map((recipe) => recipe.name)}`);
   if (recipes) {
     return (
@@ -319,10 +328,17 @@ function RenderRecipeCard({ recipes }) {
                       <h5>{recipe.recipeName}</h5>
                     </Link>
                     <p>{recipe.recipeDescription}</p>
-                    <Link className="favorite-butt" style={{ color: "black" }}>
-                      <i className="fa fa-star" />
-                      Favorite
-                    </Link>
+                    {auth.isAuthenticated ? (
+                      <Button onClick={() => postFavorite(recipe._id)}>
+                        <i className="fa fa-star" />
+                        Favorite
+                      </Button>
+                    ) : null}
+
+                    <Link
+                      className="favorite-butt"
+                      style={{ color: "black" }}
+                    ></Link>
                   </CardBody>
                 </Card>
               </div>
@@ -342,14 +358,12 @@ function RenderRecipeCard({ recipes }) {
                         <h5>{recipe.name}</h5>
                       </Link>
                       <p>{recipe.description}</p>
-                      <Link
-                        className="favorite-butt"
-                        style={{ color: "black" }}
-                      >
-                        {" "}
-                        <i className="fa fa-star" />
-                        Favorite
-                      </Link>
+                      {auth.isAuthenticated ? (
+                        <Button onClick={() => postFavorite(recipe._id)}>
+                          <i className="fa fa-star" />
+                          Favorite
+                        </Button>
+                      ) : null}
                     </Media>
                   </Media>
                 </Col>

@@ -6,6 +6,7 @@ import MainBlogPage from "./BlogComponent";
 import YourPage from "./YourPageComponent";
 import MainRecipePage from "./RecipePageComponent";
 import MainMealplanPage from "./MealPlanComponent";
+import FavoritesComponent from "./FavoritesComponent";
 import {
   fetchPosts,
   postNewPost,
@@ -14,10 +15,13 @@ import {
   fetchMealtypes,
   fetchRecipes,
   fetchUserInfo,
+  fetchFavorites,
+  deleteFavorite,
   postRecipe,
   fetchUserMealplan,
   loginUser,
   logoutUser,
+  postFavorite,
 } from "../redux/ActionCreators";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -32,6 +36,7 @@ const mapStateToProps = (state) => {
     userInfo: state.userInfo,
     userMealplan: state.userMealplan,
     auth: state.auth,
+    favorites: state.favorites,
   };
 };
 
@@ -42,6 +47,8 @@ const mapDispatchToProps = {
   deletePost: (postId) => deletePost(postId),
   updatePost: (postId, postContent) => updatePost(postId, postContent),
   fetchMealtypes: () => fetchMealtypes(),
+  fetchFavorites: () => fetchFavorites(),
+  deleteFavorite: (recipeId) => deleteFavorite(recipeId),
   fetchRecipes: () => fetchRecipes(),
   postRecipe: (
     name,
@@ -69,6 +76,7 @@ const mapDispatchToProps = {
   fetchUserMealplan: () => fetchUserMealplan(),
   loginUser: (creds) => loginUser(creds),
   logoutUser: () => logoutUser(),
+  postFavorite: (recipeId) => postFavorite(recipeId),
 };
 
 class Main extends Component {
@@ -78,6 +86,7 @@ class Main extends Component {
     this.props.fetchRecipes();
     this.props.fetchUserInfo();
     this.props.fetchUserMealplan();
+    this.props.fetchFavorites();
   }
 
   render() {
@@ -97,6 +106,7 @@ class Main extends Component {
       if (type === "allRecipes") {
         return (
           <MainRecipePage
+            postFavorite={this.props.postFavorite}
             auth={this.props.auth}
             selectedType="All Recipes"
             mealTypes={this.props.mealtypes.mealtypes}
@@ -107,6 +117,7 @@ class Main extends Component {
       } else {
         return (
           <MainRecipePage
+            postFavorite={this.props.postFavorite}
             auth={this.props.auth}
             selectedType={selectedTypeTitle}
             mealTypes={this.props.mealtypes.mealtypes}
@@ -170,6 +181,18 @@ class Main extends Component {
             path="/mealplan"
             render={() => (
               <MainMealplanPage userMealplan={this.props.userMealplan} />
+            )}
+          />
+          <Route
+            path="/favorites"
+            render={() => (
+              <FavoritesComponent
+                deleteFavorite={this.props.deleteFavorite}
+                favorites={this.props.favorites.favorites}
+                favoritesLoading={this.props.favorites.isLoading}
+                favoritesErrMess={this.props.favorites.errMess}
+                auth={this.props.auth}
+              />
             )}
           />
           <Redirect to="/home" />
