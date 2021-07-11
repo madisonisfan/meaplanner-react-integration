@@ -10,6 +10,7 @@ import {
   fetchPosts,
   postNewPost,
   deletePost,
+  updatePost,
   fetchMealtypes,
   fetchRecipes,
   fetchUserInfo,
@@ -38,6 +39,8 @@ const mapDispatchToProps = {
   fetchPosts: () => fetchPosts(),
   resetPostForm: () => actions.reset("postForm"),
   addPost: (postType, postContent) => postNewPost(postType, postContent),
+  deletePost: (postId) => deletePost(postId),
+  updatePost: (postId, postContent) => updatePost(postId, postContent),
   fetchMealtypes: () => fetchMealtypes(),
   fetchRecipes: () => fetchRecipes(),
   postRecipe: (
@@ -66,7 +69,6 @@ const mapDispatchToProps = {
   fetchUserMealplan: () => fetchUserMealplan(),
   loginUser: (creds) => loginUser(creds),
   logoutUser: () => logoutUser(),
-  deletePost: (postId) => deletePost(postId),
 };
 
 class Main extends Component {
@@ -150,6 +152,7 @@ class Main extends Component {
             render={() => (
               <MainBlogPage
                 deletePost={this.props.deletePost}
+                updatePost={this.props.updatePost}
                 auth={this.props.auth}
                 posts={this.props.posts.posts}
                 postsLoading={this.props.posts.isLoading}

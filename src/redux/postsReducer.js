@@ -16,6 +16,7 @@ export const Posts = (
         errMess: null,
         posts: action.payload,
       };
+
     case ActionTypes.POSTS_LOADING:
       return { ...state, isLoading: true, errMess: null, posts: [] };
     case ActionTypes.POSTS_FAILED:
@@ -23,6 +24,12 @@ export const Posts = (
     case ActionTypes.ADD_POST:
       const post = action.payload;
       return { ...state, posts: state.posts.concat(post) };
+    case ActionTypes.DELETE_POST:
+      const postId = action.payload;
+      const newPosts = state.posts.filter(
+        (post) => post._id.toString() !== postId.toString()
+      );
+      return { ...state, posts: newPosts };
     default:
       return state;
   }

@@ -9,7 +9,6 @@ import { baseUrl } from "../shared/baseUrl";
 /*
 export const fetchPosts = () => (dispatch) => {
   dispatch(postsLoading());
-
   setTimeout(() => {
     dispatch(addPosts(POSTS));
     //console.log(`POSTS from act creators:${POSTS}`);
@@ -42,6 +41,52 @@ export const fetchPosts = () => (dispatch) => {
     .catch((error) => dispatch(postsFailed(error.message)));
 };
 
+export const updatePost = (postId, postContent) => (dispatch) => {
+  /*const updatedPost = {
+    postContent,
+  };*/
+
+  //console.log("Post", updatedPost);
+
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return (
+    fetch(baseUrl + "posts/" + postId, {
+      method: "PUT",
+      // body: JSON.stringify(updatedPost),
+      body: JSON.stringify(postContent),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: bearer,
+      },
+      credentials: "same-origin",
+    })
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            const error = new Error(
+              `Error ${response.status}: ${response.statusText}`
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          throw error;
+        }
+      )
+      .then((response) => response.json())
+      //.then((response) => dispatch(addPost(response)))
+      .then(() => location.reload())
+      .catch((error) => {
+        console.log("post err", error.message);
+        alert("Your post could not be posted\nError: " + error.message);
+      })
+  );
+};
+
 export const deletePost = (postId) => (dispatch) => {
   const bearer = "Bearer " + localStorage.getItem("token");
 
@@ -69,12 +114,22 @@ export const deletePost = (postId) => (dispatch) => {
       }
     )
     .then((response) => response.json())
-    .then((posts) => {
-      console.log("Post Deleted", posts);
-      dispatch(addPosts(posts));
+    .then((post) => {
+      console.log("Post Deleted", post);
+      //dispatch(addPosts(posts));
+      dispatch(removePost(post._id));
     })
     .catch((error) => dispatch(postsFailed(error.message)));
 };
+
+/*export const removePost = (postId) => {
+  alert(postId);
+};*/
+
+export const removePost = (postId) => ({
+  type: ActionTypes.DELETE_POST,
+  payload: postId,
+});
 
 export const addPosts = (posts) => ({
   type: ActionTypes.ADD_POSTS,
@@ -129,6 +184,7 @@ export const postNewPost = (postType, postContent) => (dispatch) => {
     )
     .then((response) => response.json())
     .then((response) => dispatch(addPost(response)))
+    .then(() => location.reload())
     .catch((error) => {
       console.log("post post", error.message);
       alert("Your post could not be posted\nError: " + error.message);
