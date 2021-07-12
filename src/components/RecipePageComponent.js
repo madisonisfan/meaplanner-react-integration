@@ -18,6 +18,20 @@ import { Link } from "react-router-dom";
 import { LocalForm, Control } from "react-redux-form"; //Errors
 import { baseUrl } from "../shared/baseUrl";
 
+/*
+{auth.isAuthenticated && favorites.includes(recipe._id) ? (
+                      <Button onClick={() => postFavorite(recipe._id)}>
+                        <i className="fa fa-star" />
+                        Delete Favorite
+                      </Button>
+                    ) : (
+                      <Button onClick={() => postFavorite(recipe._id)}>
+                        <i className="fa fa-star" />
+                        Favorite
+                      </Button>
+                    )}
+*/
+
 function MainRecipePage({
   selectedType,
   mealTypes,
@@ -25,8 +39,11 @@ function MainRecipePage({
   postRecipe,
   auth,
   postFavorite,
+  favorites,
+  deleteFavorite,
 }) {
   console.log(`selected Type ${selectedType}`);
+  // const favoritesId = favorites
   return (
     <React.Fragment>
       <PageTitleComponent title={`Recipe: ${selectedType}`} />
@@ -47,6 +64,8 @@ function MainRecipePage({
             recipes={recipes}
             postFavorite={postFavorite}
             auth={auth}
+            favorites={favorites}
+            deleteFavorite={deleteFavorite}
           />
         </div>
       </div>
@@ -309,7 +328,13 @@ function RenderButtons({ mealTypes, postRecipe, auth }) {
   );
 }
 
-function RenderRecipeCard({ recipes, postFavorite, auth }) {
+function RenderRecipeCard({
+  recipes,
+  postFavorite,
+  auth,
+  favorites,
+  deleteFavorite,
+}) {
   //alert(`recipes: ${recipes.map((recipe) => recipe.name)}`);
   if (recipes) {
     return (
@@ -328,12 +353,17 @@ function RenderRecipeCard({ recipes, postFavorite, auth }) {
                       <h5>{recipe.recipeName}</h5>
                     </Link>
                     <p>{recipe.recipeDescription}</p>
-                    {auth.isAuthenticated ? (
+                    {console.log(favorites)}
+                    {auth.isAuthenticated && favorites.includes(recipe._id) ? (
+                      <Button onClick={() => deleteFavorite(recipe._id)}>
+                        Delete Favorite
+                      </Button>
+                    ) : (
                       <Button onClick={() => postFavorite(recipe._id)}>
                         <i className="fa fa-star" />
                         Favorite
                       </Button>
-                    ) : null}
+                    )}
 
                     <Link
                       className="favorite-butt"

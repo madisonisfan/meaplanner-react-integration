@@ -106,17 +106,22 @@ class Main extends Component {
       if (type === "allRecipes") {
         return (
           <MainRecipePage
+            favorites={this.props.favorites.favorites.map(
+              (favorite) => favorite._id
+            )}
             postFavorite={this.props.postFavorite}
             auth={this.props.auth}
             selectedType="All Recipes"
             mealTypes={this.props.mealtypes.mealtypes}
             recipes={this.props.recipes.recipes}
             postRecipe={this.props.postRecipe}
+            deleteFavorite={this.props.deleteFavorite}
           />
         );
       } else {
         return (
           <MainRecipePage
+            favorites={this.props.favorites.favorites}
             postFavorite={this.props.postFavorite}
             auth={this.props.auth}
             selectedType={selectedTypeTitle}
@@ -125,6 +130,7 @@ class Main extends Component {
               (recipe) => recipe.mealType === type
             )}
             postRecipe={this.props.postRecipe}
+            deleteFavorite={this.props.deleteFavorite}
           />
         );
       }

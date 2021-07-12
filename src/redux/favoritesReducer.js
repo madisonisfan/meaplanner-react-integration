@@ -4,7 +4,7 @@ export const Favorites = (
   state = {
     isLoading: true,
     errMess: null,
-    favorites: null,
+    favorites: [],
   },
   action
 ) => {
@@ -18,14 +18,13 @@ export const Favorites = (
       };
 
     case ActionTypes.FAVORITES_LOADING:
-      return { ...state, isLoading: true, errMess: null, favorites: null };
+      return { ...state, isLoading: true, errMess: null, favorites: [] };
 
     case ActionTypes.FAVORITES_FAILED:
       return {
         ...state,
         isLoading: false,
         errMess: action.payload,
-        favorites: null,
       };
 
     default:

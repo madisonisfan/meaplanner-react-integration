@@ -110,6 +110,7 @@ export const deleteFavorite = (recipeId) => (dispatch) => {
     .then((favorites) => {
       console.log("Favorite Deleted", favorites);
       dispatch(addFavorites(favorites));
+      //dispatch(removeFavorite)
     })
     .catch((error) => dispatch(favoritesFailed(error.message)));
 };
