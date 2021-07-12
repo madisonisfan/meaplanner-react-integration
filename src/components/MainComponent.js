@@ -22,6 +22,8 @@ import {
   loginUser,
   logoutUser,
   postFavorite,
+  fetchLikes,
+  postLike,
 } from "../redux/ActionCreators";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -37,6 +39,7 @@ const mapStateToProps = (state) => {
     userMealplan: state.userMealplan,
     auth: state.auth,
     favorites: state.favorites,
+    likes: state.likes,
   };
 };
 
@@ -48,6 +51,7 @@ const mapDispatchToProps = {
   updatePost: (postId, postContent) => updatePost(postId, postContent),
   fetchMealtypes: () => fetchMealtypes(),
   fetchFavorites: () => fetchFavorites(),
+  fetchLikes: () => fetchLikes(),
   deleteFavorite: (recipeId) => deleteFavorite(recipeId),
   fetchRecipes: () => fetchRecipes(),
   postRecipe: (
@@ -77,6 +81,7 @@ const mapDispatchToProps = {
   loginUser: (creds) => loginUser(creds),
   logoutUser: () => logoutUser(),
   postFavorite: (recipeId) => postFavorite(recipeId),
+  postLike: (postId) => postLike(postId),
 };
 
 class Main extends Component {
@@ -87,6 +92,7 @@ class Main extends Component {
     this.props.fetchUserInfo();
     this.props.fetchUserMealplan();
     this.props.fetchFavorites();
+    this.props.fetchLikes();
   }
 
   render() {
@@ -121,7 +127,9 @@ class Main extends Component {
       } else {
         return (
           <MainRecipePage
-            favorites={this.props.favorites.favorites}
+            favorites={this.props.favorites.favorites.map(
+              (favorite) => favorite._id
+            )}
             postFavorite={this.props.postFavorite}
             auth={this.props.auth}
             selectedType={selectedTypeTitle}
@@ -176,6 +184,9 @@ class Main extends Component {
                 postsErrMess={this.props.posts.errMess}
                 resetPostForm={this.props.resetPostForm}
                 addPost={this.props.addPost}
+                postLike={this.props.postLike}
+                likes={this.props.likes}
+                currentUsername={this.props.auth}
               />
             )}
           />

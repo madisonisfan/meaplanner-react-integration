@@ -379,21 +379,26 @@ function RenderRecipeCard({
                     <Media left>
                       <img
                         className="d-flex recipe-img-sm"
-                        src={baseUrl + recipe.image}
+                        src={baseUrl + recipe.imageUrl}
                       />
                     </Media>
 
                     <Media body className="recipe-sm-body">
                       <Link style={{ color: "black" }}>
-                        <h5>{recipe.name}</h5>
+                        <h5>{recipe.recipeName}</h5>
                       </Link>
-                      <p>{recipe.description}</p>
-                      {auth.isAuthenticated ? (
+                      <p>{recipe.recipeDescription}</p>
+                      {auth.isAuthenticated &&
+                      favorites.includes(recipe._id) ? (
+                        <Button onClick={() => deleteFavorite(recipe._id)}>
+                          Delete Favorite
+                        </Button>
+                      ) : (
                         <Button onClick={() => postFavorite(recipe._id)}>
                           <i className="fa fa-star" />
                           Favorite
                         </Button>
-                      ) : null}
+                      )}
                     </Media>
                   </Media>
                 </Col>

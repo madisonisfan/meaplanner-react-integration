@@ -129,6 +129,82 @@ export const addFavorites = (favorites) => ({
   payload: favorites,
 });
 
+export const fetchLikes = () => (dispatch) => {
+  return fetch(baseUrl + "likes")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error: ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then((response) => response.json())
+    .then((likes) => dispatch(addLikes(likes)))
+    .catch((error) => dispatch(likesFailed(error.message)));
+};
+
+export const postLike = (postId) => (dispatch) => {
+  const bearer = "Bearer " + localStorage.getItem("token");
+  return (
+    fetch(baseUrl + "likes/" + postId, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: bearer,
+      },
+      credentials: "same-origin",
+    })
+      .then(
+        (response) => {
+          if (response.ok) {
+            return response;
+          } else {
+            const error = new Error(
+              `Error ${response.status}: ${response.statusText}`
+            );
+            error.response = response;
+            throw error;
+          }
+        },
+        (error) => {
+          throw error;
+        }
+      )
+      .then((response) => response.json())
+      .then((like) => dispatch(addLike(like)))
+      //.then(() => location.reload())
+      .catch((error) => {
+        console.log("post like", error.message);
+        alert("Your like could not be posted\nError: " + error.message);
+      })
+  );
+};
+
+export const addLike = (like) => ({
+  type: ActionTypes.ADD_LIKE,
+  payload: like,
+});
+
+export const addLikes = (likes) => ({
+  type: ActionTypes.ADD_LIKES,
+  payload: likes,
+});
+
+export const likesFailed = (errMess) => ({
+  type: ActionTypes.LIKES_FAILED,
+  payload: errMess,
+});
+
 export const fetchPosts = () => (dispatch) => {
   dispatch(recipesLoading());
 

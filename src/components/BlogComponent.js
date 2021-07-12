@@ -15,6 +15,8 @@ function MainBlogPage({
   auth,
   deletePost,
   updatePost,
+  postLike,
+  likes,
 }) {
   //console.log(`${posts.posts}`);
   console.log(`isloadingMAIN: ${postsLoading}`);
@@ -26,6 +28,8 @@ function MainBlogPage({
         auth={auth}
         deletePost={deletePost}
         updatePost={updatePost}
+        postLike={postLike}
+        likes={likes}
       />
     );
   });
@@ -112,7 +116,30 @@ class RenderPost extends Component {
             <div id="post-header-line"></div>
           </Col>
           <Col xs={6} className="post-buttons">
-            <Link style={{ color: "black" }}>Like</Link>
+            {this.props.likes.likes
+              .filter(
+                (like) =>
+                  like.post._id.toString() === this.props.post._id.toString()
+              )
+              .map((like) => like.liker.username)
+              .includes(this.props.auth.user.username) ? (
+              <Button>Unlike</Button>
+            ) : (
+              <Button onClick={() => this.props.postLike(this.props.post._id)}>
+                Like
+              </Button>
+            )}
+          </Col>
+          <Col>
+            <p>
+              Number of likes:{" "}
+              {
+                this.props.likes.likes.filter(
+                  (like) =>
+                    like.post._id.toString() === this.props.post._id.toString()
+                ).length
+              }
+            </p>
           </Col>
           <Col xs={6} className="post-buttons">
             <Link style={{ color: "black" }}>Comment</Link>
