@@ -497,11 +497,11 @@ export const postRecipe = (
     ingredients,
     instructions,
   };
-
-  newRecipe.recipeDate = new Date().toISOString().date;
+  console.log(new Date().toISOString().date);
+  newRecipe.recipeDate = new Date().toISOString();
   newRecipe.imageUrl = "images/food2.jpg";
 
-  console.log("Comment ", newRecipe);
+  console.log("new recipe ", newRecipe);
 
   const bearer = "Bearer " + localStorage.getItem("token");
 
@@ -526,9 +526,9 @@ export const postRecipe = (
       }
     })
     .then((response) => response.json())
-    .then((repsonse) => dispatch(addRecipe(repsonse)))
+    .then((recipe) => dispatch(addRecipe(recipe)))
     .catch((error) => {
-      console.log("add recipe", error.message);
+      //console.log("add recipe", error.message);
       alert("Your recipe could not be posted\nError:" + error.message);
     });
 };
