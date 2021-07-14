@@ -190,8 +190,51 @@ export const postLike = (postId) => (dispatch) => {
   );
 };
 
+export const deleteLike = (postId) => (dispatch) => {
+  console.log("post to unlike id", postId);
+  console.log("unliking");
+
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return fetch(baseUrl + "likes/" + postId, {
+    method: "DELETE",
+    headers: {
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((like) => {
+      console.log("remove like action c", like);
+      //console.log("Like Deleted", likes);
+      // dispatch(addLikes(likes));
+      dispatch(removeLike(like));
+    })
+    .catch((error) => dispatch(likesFailed(error.message)));
+};
+
 export const addLike = (like) => ({
   type: ActionTypes.ADD_LIKE,
+  payload: like,
+});
+export const removeLike = (like) => ({
+  type: ActionTypes.DELETE_LIKE,
   payload: like,
 });
 
@@ -232,12 +275,6 @@ export const fetchPosts = () => (dispatch) => {
 };
 
 export const updatePost = (postId, postContent) => (dispatch) => {
-  /*const updatedPost = {
-    postContent,
-  };*/
-
-  //console.log("Post", updatedPost);
-
   const bearer = "Bearer " + localStorage.getItem("token");
 
   return (

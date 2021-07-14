@@ -17,6 +17,7 @@ function MainBlogPage({
   updatePost,
   postLike,
   likes,
+  removeLike,
 }) {
   //console.log(`${posts.posts}`);
   console.log(`isloadingMAIN: ${postsLoading}`);
@@ -30,6 +31,7 @@ function MainBlogPage({
         updatePost={updatePost}
         postLike={postLike}
         likes={likes}
+        removeLike={removeLike}
       />
     );
   });
@@ -116,14 +118,26 @@ class RenderPost extends Component {
             <div id="post-header-line"></div>
           </Col>
           <Col xs={6} className="post-buttons">
-            {this.props.likes.likes
-              .filter(
-                (like) =>
-                  like.post._id.toString() === this.props.post._id.toString()
-              )
+            {/*console.log("all likes: ", this.props.likes)*/}
+            {/*console.log("current postId", this.props.post._id)*/}
+            {/*console.log(
+              "filtered list:",
+              this.props.likes
+                .filter((like) => like.post._id === this.props.post._id)
+                .map((like) => like.liker.username)
+              .includes(this.props.auth.user.username)
+                ? "Current User has liked"
+                : "Current user has not liked"
+            )*/}
+            {this.props.likes
+              .filter((like) => like.post._id === this.props.post._id)
               .map((like) => like.liker.username)
               .includes(this.props.auth.user.username) ? (
-              <Button>Unlike</Button>
+              <Button
+                onClick={() => this.props.removeLike(this.props.post._id)}
+              >
+                Unlike
+              </Button>
             ) : (
               <Button onClick={() => this.props.postLike(this.props.post._id)}>
                 Like
@@ -134,9 +148,8 @@ class RenderPost extends Component {
             <p>
               Number of likes:{" "}
               {
-                this.props.likes.likes.filter(
-                  (like) =>
-                    like.post._id.toString() === this.props.post._id.toString()
+                this.props.likes.filter(
+                  (like) => like.post._id === this.props.post._id
                 ).length
               }
             </p>

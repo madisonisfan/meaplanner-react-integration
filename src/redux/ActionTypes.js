@@ -6,6 +6,7 @@ export const DELETE_POST = "DELETE_POST";
 
 export const ADD_LIKES = "ADD_LIKES";
 export const ADD_LIKE = "ADD_LIKE";
+export const DELETE_LIKE = "DELETE_LIKE";
 export const LIKES_FAILED = "LIKES_FAILED";
 
 export const ADD_RECIPES = "ADD_RECIPES";

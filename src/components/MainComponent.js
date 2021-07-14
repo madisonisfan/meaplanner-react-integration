@@ -24,6 +24,7 @@ import {
   postFavorite,
   fetchLikes,
   postLike,
+  deleteLike,
 } from "../redux/ActionCreators";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
@@ -82,6 +83,7 @@ const mapDispatchToProps = {
   logoutUser: () => logoutUser(),
   postFavorite: (recipeId) => postFavorite(recipeId),
   postLike: (postId) => postLike(postId),
+  removeLike: (postId) => deleteLike(postId),
 };
 
 class Main extends Component {
@@ -185,7 +187,8 @@ class Main extends Component {
                 resetPostForm={this.props.resetPostForm}
                 addPost={this.props.addPost}
                 postLike={this.props.postLike}
-                likes={this.props.likes}
+                removeLike={this.props.removeLike}
+                likes={this.props.likes.likes}
                 currentUsername={this.props.auth}
               />
             )}
