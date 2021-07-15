@@ -13,6 +13,7 @@ import {
   Label,
 } from "reactstrap";
 import { LocalForm, Control } from "react-redux-form";
+import { Link } from "react-router-dom";
 
 function MainYourPage({ userInfo }) {
   console.log(`goal: ${userInfo.goal}`);
@@ -22,12 +23,21 @@ function MainYourPage({ userInfo }) {
       <div className="container-fluid">
         <Row>
           <Col xs={12} className="d-flex justify-content-center">
-            <Button>Favorites</Button>
+            <Button>
+              {" "}
+              <Link style={{ color: "black" }} to={"/favorites"}>
+                My Favorites
+              </Link>
+            </Button>
           </Col>
         </Row>
         <Row className="mt-2">
           <Col className="d-flex justify-content-end">
-            <Button>Your Posts</Button>
+            <Button>
+              <Link style={{ color: "black" }} to={"/myPosts"}>
+                My Posts
+              </Link>
+            </Button>
           </Col>
           <Col className="d-flex justify-content-start">
             <Button>Your Recipes</Button>

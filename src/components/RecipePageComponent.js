@@ -29,7 +29,7 @@ function MainRecipePage({
   deleteFavorite,
 }) {
   console.log(`selected Type ${selectedType}`);
-
+  // const favoritesId = favorites
   return (
     <React.Fragment>
       <PageTitleComponent title={`Recipe: ${selectedType}`} />
@@ -72,7 +72,9 @@ function RenderButtons({ mealTypes, postRecipe, auth }) {
       {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
       {auth.isAuthenticated ? (
         <Button>
-          <Link to={"/favorites"}>My Favorites</Link>
+          <Link style={{ color: "black" }} to={"/favorites"}>
+            My Favorites
+          </Link>
         </Button>
       ) : null}
     </React.Fragment>

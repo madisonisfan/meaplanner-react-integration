@@ -34,7 +34,7 @@ function MainMealplanPage({ userMealplan, favorites }) {
 }
 
 function RenderEachDay({ mealplan, favorites }) {
-  const [activeTab, setActiveTab] = useState("1");
+  const [activeTab, setActiveTab] = useState("Breakfast");
 
   const toggle = (tab) => {
     if (activeTab !== tab) setActiveTab(tab);
@@ -96,7 +96,7 @@ function RenderEachDay({ mealplan, favorites }) {
                 </NavItem>
               </Nav>
               <TabContent activeTab={activeTab} className="mealplan-box">
-                <TabPane tabId="Breakfast">
+                <TabPane tabId="Breakfast" className="tab-pane-style">
                   <Media>
                     <img
                       className="d-flex mealplan-recipe-img "
@@ -105,11 +105,14 @@ function RenderEachDay({ mealplan, favorites }) {
                     <Media body>
                       <h5>{day.breakfast.recipeName}</h5>
                       <p>There will be a brief description here</p>
-                      <RenderEditButton favorites={favorites} />
+                      <RenderEditButton
+                        favorites={favorites}
+                        editOrAdd="Edit"
+                      />
                     </Media>
                   </Media>
                 </TabPane>
-                <TabPane tabId="LunchDinner">
+                <TabPane tabId="LunchDinner" className="tab-pane-style">
                   <Media>
                     <img
                       className="d-flex mealplan-recipe-img "
@@ -118,9 +121,26 @@ function RenderEachDay({ mealplan, favorites }) {
                     <Media body>
                       <h5>{day.lunchDinner.recipeName}</h5>
                       <p>There will be a brief description here</p>
-                      <RenderEditButton favorites={favorites} />
+                      <RenderEditButton
+                        favorites={favorites}
+                        editOrAdd="Edit"
+                      />
                     </Media>
                   </Media>
+                </TabPane>
+                <TabPane tabId="Snacks" className="tab-pane-style">
+                  <p style={{ textAlign: "center", marginTop: "25px" }}>
+                    {" "}
+                    No meal selected.
+                  </p>
+                  <RenderEditButton favorites={favorites} editOrAdd="Add" />
+                </TabPane>
+                <TabPane tabId="Drinks" className="tab-pane-style">
+                  <p style={{ textAlign: "center", marginTop: "25px" }}>
+                    {" "}
+                    No meal selected.
+                  </p>
+                  <RenderEditButton favorites={favorites} editOrAdd="Add" />
                 </TabPane>
               </TabContent>
             </Col>
@@ -153,7 +173,7 @@ class RenderEditButton extends Component {
           className="edit-mealplan-recipe-butt"
           onClick={this.toggleModal}
         >
-          Change Recipe
+          {this.props.editOrAdd === "Edit" ? "Change Recipe" : "Add Recipe"}
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Favorites</ModalHeader>
@@ -203,7 +223,11 @@ function RenderFavorites({ favorites }) {
                           </Col>
                         </Row>
                         <Row>
-                          <Col xs={12} className="pl-6">
+                          <Col
+                            xs={12}
+                            className="pl-6"
+                            style={{ float: "right" }}
+                          >
                             <Input
                               type="radio"
                               name="selectedMeal"

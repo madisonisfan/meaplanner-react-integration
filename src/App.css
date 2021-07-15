@@ -258,3 +258,7 @@ body {
 .media-body {
   padding: 5px;
 }
+
+.tab-pane-style {
+  min-height: 90px;
+}

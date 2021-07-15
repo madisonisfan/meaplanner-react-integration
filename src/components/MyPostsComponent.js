@@ -13,7 +13,7 @@ import {
   faThumbsUp as faThumbsUpRegular,
 } from "@fortawesome/free-regular-svg-icons";
 
-function MainBlogPage({
+function MyPosts({
   posts,
   postsLoading,
   postsErrMess,
@@ -67,17 +67,6 @@ function MainBlogPage({
     <React.Fragment>
       <PageTitleComponent title="Blog" />
 
-      <div className="container-fluid text-center mx-auto">
-        <Row>
-          <Col xs={12}>
-            <AddPostForm
-              auth={auth}
-              resetPostForm={resetPostForm}
-              addPost={addPost}
-            />
-          </Col>
-        </Row>
-      </div>
       <div className="container-fluid mx-auto blog-container">{allPosts}</div>
     </React.Fragment>
   );
@@ -189,11 +178,9 @@ class RenderPost extends Component {
               <Button color="link">Comment</Button>
             ) : null}
           </Col>
-          {this.props.auth.isAuthenticated ? (
-            <Col xs={12}>
-              <div id="post-header-line"></div>
-            </Col>
-          ) : null}
+          <Col xs={12}>
+            <div id="post-header-line"></div>
+          </Col>
         </Row>
 
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
@@ -225,94 +212,4 @@ class RenderPost extends Component {
   }
 }
 
-/*
-<Col>
-        {auth.isAuthenticated &&
-        auth.user.username === post.postCreator.username ? (
-         <Button onClick={() => alert("hello")}>Delete Post</Button>
-        ) : null}
-      </Col>
-*/
-class AddPostForm extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      postType: "Post Type",
-      postContent: "",
-      isModalOpen: false,
-    };
-    this.handlePostSubmit = this.handlePostSubmit.bind(this);
-    this.toggleModal = this.toggleModal.bind(this);
-  }
-
-  handlePostSubmit(values) {
-    //alert(`New Post: ${JSON.stringify(values)}`);
-
-    this.props.addPost(values.postType, values.postContent);
-    this.toggleModal();
-    //this.props.resetPostForm(); don't think I need
-    //window.location.reload(false);
-  }
-
-  toggleModal() {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
-  }
-
-  render() {
-    return (
-      <React.Fragment>
-        {this.props.auth.isAuthenticated ? (
-          <Button className="create-post-butt" onClick={this.toggleModal}>
-            Want to post something?
-          </Button>
-        ) : null}
-
-        <Modal
-          className="create-post-modal"
-          isOpen={this.state.isModalOpen}
-          toggle={this.toggleModal}
-        >
-          <ModalHeader toggle={this.toggleModal}>
-            <h2 className="text-center">Create Post</h2>
-          </ModalHeader>
-          <LocalForm onSubmit={(values) => this.handlePostSubmit(values)}>
-            {" "}
-            {/*model=".postForm"*/}
-            <div className="container-fluid mx-auto">
-              <Row className="form-group create-post-row">
-                <Col xs={12}>
-                  <Control.select
-                    id="postType"
-                    name="postType"
-                    model=".postType"
-                    className="form-control mb-2"
-                  >
-                    <option>Post Type</option>
-                    <option>Question</option>
-                    <option>Advice</option>
-                    <option>Other</option>
-                  </Control.select>
-                </Col>
-
-                <Col xs={12}>
-                  <Control.textarea
-                    id="postContent"
-                    name="postContent"
-                    model=".postContent"
-                    rows="4"
-                    className="form-control mb-2"
-                  />
-                </Col>
-                <Col xs={12}>
-                  <Button type="submit">Post</Button>
-                </Col>
-              </Row>
-            </div>
-          </LocalForm>
-        </Modal>
-      </React.Fragment>
-    );
-  }
-}
-
-export default MainBlogPage;
+export default MyPosts;

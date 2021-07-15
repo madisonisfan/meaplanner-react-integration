@@ -7,6 +7,7 @@ import YourPage from "./YourPageComponent";
 import MainRecipePage from "./RecipePageComponent";
 import MainMealplanPage from "./MealPlanComponent";
 import FavoritesComponent from "./FavoritesComponent";
+import MyPosts from "./MyPostsComponent";
 import {
   fetchPosts,
   postNewPost,
@@ -193,13 +194,17 @@ class Main extends Component {
               />
             )}
           />
-          <Route
+          <PrivateRoute
+            exact
             path="/yourpage"
-            render={() => <YourPage userInfo={this.props.userInfo.userInfo} />}
+            component={() => (
+              <YourPage userInfo={this.props.userInfo.userInfo} />
+            )}
           />
-          <Route
+          <PrivateRoute
+            exact
             path="/mealplan"
-            render={() => (
+            component={() => (
               <MainMealplanPage
                 userMealplan={this.props.userMealplan}
                 favorites={this.props.favorites.favorites}
@@ -215,6 +220,33 @@ class Main extends Component {
                 favoritesLoading={this.props.favorites.isLoading}
                 favoritesErrMess={this.props.favorites.errMess}
                 auth={this.props.auth}
+              />
+            )}
+          />
+          <Route
+            path="/myPosts"
+            render={() => (
+              <MyPosts
+                deletePost={this.props.deletePost}
+                updatePost={this.props.updatePost}
+                auth={this.props.auth}
+                posts={
+                  this.props.auth.isAuthenticated
+                    ? this.props.posts.posts.filter(
+                        (post) =>
+                          post.postCreator.username ===
+                          this.props.auth.user.username
+                      )
+                    : this.props.posts.posts
+                }
+                postsLoading={this.props.posts.isLoading}
+                postsErrMess={this.props.posts.errMess}
+                resetPostForm={this.props.resetPostForm}
+                addPost={this.props.addPost}
+                postLike={this.props.postLike}
+                removeLike={this.props.removeLike}
+                likes={this.props.likes.likes}
+                currentUsername={this.props.auth}
               />
             )}
           />

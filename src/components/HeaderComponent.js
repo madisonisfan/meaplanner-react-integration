@@ -106,7 +106,7 @@ class MainNav extends Component {
                 <NavItem>
                   {!this.props.auth.isAuthenticated ? (
                     <Button outline onClick={this.toggleModal}>
-                      <i className="fa fa-sign-in fa-lg" /> Login
+                      Login
                       {this.props.auth.isFetching ? (
                         <span className="fa fa-spinner fa-pulse fa-fw" />
                       ) : null}
@@ -117,7 +117,7 @@ class MainNav extends Component {
                         {this.props.auth.user.username}
                       </div>
                       <Button outline onClick={this.handleLogout}>
-                        <span className="fa fa-sign-out fa-lg"></span> Logout
+                        Logout
                         {this.props.auth.isFetching ? (
                           <span className="fa fa-spinner fa-pulse fa-fw" />
                         ) : null}
