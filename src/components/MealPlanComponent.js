@@ -143,6 +143,9 @@ class RenderEditButton extends Component {
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Favorites</ModalHeader>
+          <ModalBody>
+            <div className="container-fluid"></div>
+          </ModalBody>
         </Modal>
       </React.Fragment>
     );

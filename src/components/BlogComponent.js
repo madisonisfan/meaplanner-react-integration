@@ -5,6 +5,13 @@ import { LocalForm, Control } from "react-redux-form"; // Errors
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { Auth } from "../redux/auth";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHome, faTimes, faThumbsUp } from "@fortawesome/free-solid-svg-icons";
+import {
+  faEdit,
+  faWindowClose,
+  faThumbsUp as faThumbsUpRegular,
+} from "@fortawesome/free-regular-svg-icons";
 
 function MainBlogPage({
   posts,
@@ -71,11 +78,7 @@ function MainBlogPage({
           </Col>
         </Row>
       </div>
-      <div className="container-fluid mx-auto blog-container">
-        <Row>
-          <Col xs={12}>{allPosts}</Col>
-        </Row>
-      </div>
+      <div className="container-fluid mx-auto blog-container">{allPosts}</div>
     </React.Fragment>
   );
 }
@@ -105,48 +108,47 @@ class RenderPost extends Component {
     return (
       <React.Fragment>
         <Row className="post-row" key={this.props.post._id}>
-          <Col xs={12}>
-            <h4>{this.props.post.postCreator.username}</h4>
+          <Col>
+            <Row style={{ height: "30px" }}>
+              <Col xs={10}>
+                <h4>{this.props.post.postCreator.username}</h4>
+              </Col>
+              <Col xs={1}>
+                {this.props.auth.isAuthenticated &&
+                this.props.auth.user.username ===
+                  this.props.post.postCreator.username ? (
+                  <Button
+                    color="link"
+                    onClick={() => this.props.deletePost(this.props.post._id)}
+                  >
+                    <FontAwesomeIcon icon={faTimes} size="lg" />
+                  </Button>
+                ) : null}
+              </Col>
+              <Col xs={1} className="p-0">
+                {this.props.auth.isAuthenticated &&
+                this.props.auth.user.username ===
+                  this.props.post.postCreator.username ? (
+                  <Button color="link" onClick={() => this.toggleModal()}>
+                    <FontAwesomeIcon icon={faEdit} />
+                  </Button>
+                ) : null}
+              </Col>
+            </Row>
           </Col>
           <Col className="post-date" xs={12}>
-            <p>{this.props.post.postDate}</p>
+            <p style={{ fontSize: 16 }}>{this.props.post.postDate}</p>
           </Col>
-          <Col xs={12}>
+          <Col className="mb-3 mt-2" xs={12} style={{ fontSize: "2px" }}>
             <p>{this.props.post.postContent}</p>
           </Col>
-          <Col xs={12}>
-            <div id="post-header-line"></div>
-          </Col>
-          <Col xs={6} className="post-buttons">
-            {/*console.log("all likes: ", this.props.likes)*/}
-            {/*console.log("current postId", this.props.post._id)*/}
-            {/*console.log(
-              "filtered list:",
-              this.props.likes
-                .filter((like) => like.post._id === this.props.post._id)
-                .map((like) => like.liker.username)
-              .includes(this.props.auth.user.username)
-                ? "Current User has liked"
-                : "Current user has not liked"
-            )*/}
-            {this.props.likes
-              .filter((like) => like.post._id === this.props.post._id)
-              .map((like) => like.liker.username)
-              .includes(this.props.auth.user.username) ? (
-              <Button
-                onClick={() => this.props.removeLike(this.props.post._id)}
-              >
-                Unlike
-              </Button>
-            ) : (
-              <Button onClick={() => this.props.postLike(this.props.post._id)}>
-                Like
-              </Button>
-            )}
-          </Col>
           <Col>
-            <p>
-              Number of likes:{" "}
+            <p style={{ fontSize: 22 }}>
+              <FontAwesomeIcon
+                icon={faThumbsUp}
+                size="md"
+                style={{ marginRight: "5px" }}
+              />
               {
                 this.props.likes.filter(
                   (like) => like.post._id === this.props.post._id
@@ -154,26 +156,41 @@ class RenderPost extends Component {
               }
             </p>
           </Col>
-          <Col xs={6} className="post-buttons">
-            <Link style={{ color: "black" }}>Comment</Link>
+          <Col xs={12}>
+            <div id="post-header-line"></div>
           </Col>
-          <Col>
-            {this.props.auth.isAuthenticated &&
-            this.props.auth.user.username ===
-              this.props.post.postCreator.username ? (
-              <Button
-                onClick={() => this.props.deletePost(this.props.post._id)}
-              >
-                Delete Post
-              </Button>
+
+          <Col className="post-buttons" xs={6} style={{ textAlign: "center" }}>
+            {console.log("isAuthenticated", this.props.auth.isAuthenticated)}
+            {this.props.auth.isAuthenticated ? (
+              this.props.likes
+                .filter((like) => like.post._id === this.props.post._id)
+                .map((like) => like.liker.username)
+                .includes(this.props.auth.user.username) ? (
+                <Button
+                  color="link"
+                  onClick={() => this.props.removeLike(this.props.post._id)}
+                >
+                  {" "}
+                  Unlike
+                </Button>
+              ) : (
+                <Button
+                  color="link"
+                  onClick={() => this.props.postLike(this.props.post._id)}
+                >
+                  {/*<FontAwesomeIcon icon={["far", "thumbs-up"]} />*/} Like
+                </Button>
+              )
             ) : null}
           </Col>
-          <Col>
-            {this.props.auth.isAuthenticated &&
-            this.props.auth.user.username ===
-              this.props.post.postCreator.username ? (
-              <Button onClick={() => this.toggleModal()}>Edit Post</Button>
+          <Col className="post-buttons" xs={6} style={{ textAlign: "center" }}>
+            {this.props.auth.isAuthenticated ? (
+              <Button color="link">Comment</Button>
             ) : null}
+          </Col>
+          <Col xs={12}>
+            <div id="post-header-line"></div>
           </Col>
         </Row>
 
