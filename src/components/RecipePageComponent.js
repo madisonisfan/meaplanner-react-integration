@@ -18,20 +18,6 @@ import { Link } from "react-router-dom";
 import { LocalForm, Control } from "react-redux-form"; //Errors
 import { baseUrl } from "../shared/baseUrl";
 
-/*
-{auth.isAuthenticated && favorites.includes(recipe._id) ? (
-                      <Button onClick={() => postFavorite(recipe._id)}>
-                        <i className="fa fa-star" />
-                        Delete Favorite
-                      </Button>
-                    ) : (
-                      <Button onClick={() => postFavorite(recipe._id)}>
-                        <i className="fa fa-star" />
-                        Favorite
-                      </Button>
-                    )}
-*/
-
 function MainRecipePage({
   selectedType,
   mealTypes,
@@ -43,7 +29,7 @@ function MainRecipePage({
   deleteFavorite,
 }) {
   console.log(`selected Type ${selectedType}`);
-  // const favoritesId = favorites
+
   return (
     <React.Fragment>
       <PageTitleComponent title={`Recipe: ${selectedType}`} />
@@ -71,6 +57,111 @@ function MainRecipePage({
       </div>
     </React.Fragment>
   );
+}
+
+function RenderButtons({ mealTypes, postRecipe, auth }) {
+  return (
+    <React.Fragment>
+      {mealTypes.map((type) => (
+        <Button className="meal-type-button" key={type.id}>
+          <Link style={{ color: "black" }} to={`/recipes/${type.mealType}`}>
+            {type.title}
+          </Link>
+        </Button>
+      ))}
+      {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
+      {auth.isAuthenticated ? (
+        <Button>
+          <Link to={"/favorites"}>My Favorites</Link>
+        </Button>
+      ) : null}
+    </React.Fragment>
+  );
+}
+
+function RenderRecipeCard({
+  recipes,
+  postFavorite,
+  auth,
+  favorites,
+  deleteFavorite,
+}) {
+  //alert(`recipes: ${recipes.map((recipe) => recipe.name)}`);
+  if (recipes) {
+    return (
+      <React.Fragment>
+        {recipes.map((recipe) => {
+          return (
+            <React.Fragment key={recipe._id}>
+              <div className="col-4 col-lg-3 d-none d-md-block">
+                <Card className="recipe-card mx-auto">
+                  <img
+                    class="card-img-top recipe-img"
+                    src={baseUrl + recipe.imageUrl}
+                  />
+                  <CardBody>
+                    <Link style={{ color: "black" }}>
+                      <h5>{recipe.recipeName}</h5>
+                    </Link>
+                    <p>{recipe.recipeDescription}</p>
+                    {console.log(favorites)}
+                    {auth.isAuthenticated && favorites.includes(recipe._id) ? (
+                      <Button onClick={() => deleteFavorite(recipe._id)}>
+                        Delete Favorite
+                      </Button>
+                    ) : (
+                      <Button onClick={() => postFavorite(recipe._id)}>
+                        <i className="fa fa-star" />
+                        Favorite
+                      </Button>
+                    )}
+
+                    <Link
+                      className="favorite-butt"
+                      style={{ color: "black" }}
+                    ></Link>
+                  </CardBody>
+                </Card>
+              </div>
+
+              <div className="recipe-container-sm  mx-auto d-block d-md-none">
+                <Col xs={12} className="recipe-box-sm">
+                  <Media>
+                    <Media left>
+                      <img
+                        className="d-flex recipe-img-sm"
+                        src={baseUrl + recipe.imageUrl}
+                      />
+                    </Media>
+
+                    <Media body className="recipe-sm-body">
+                      <Link style={{ color: "black" }}>
+                        <h5>{recipe.recipeName}</h5>
+                      </Link>
+                      <p>{recipe.recipeDescription}</p>
+                      {auth.isAuthenticated &&
+                      favorites.includes(recipe._id) ? (
+                        <Button onClick={() => deleteFavorite(recipe._id)}>
+                          Delete Favorite
+                        </Button>
+                      ) : (
+                        <Button onClick={() => postFavorite(recipe._id)}>
+                          <i className="fa fa-star" />
+                          Favorite
+                        </Button>
+                      )}
+                    </Media>
+                  </Media>
+                </Col>
+              </div>
+            </React.Fragment>
+          );
+        })}
+      </React.Fragment>
+    );
+  } else {
+    return <div className="col">Problem with object</div>;
+  }
 }
 
 class AddRecipeForm extends Component {
@@ -306,110 +397,6 @@ class AddRecipeForm extends Component {
         </Modal>
       </React.Fragment>
     );
-  }
-}
-function RenderButtons({ mealTypes, postRecipe, auth }) {
-  return (
-    <React.Fragment>
-      {mealTypes.map((type) => (
-        <Button className="meal-type-button" key={type.id}>
-          <Link style={{ color: "black" }} to={`/recipes/${type.mealType}`}>
-            {type.title}
-          </Link>
-        </Button>
-      ))}
-      {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
-      {auth.isAuthenticated ? (
-        <Button>
-          <Link to={"/favorites"}>My Favorites</Link>
-        </Button>
-      ) : null}
-    </React.Fragment>
-  );
-}
-
-function RenderRecipeCard({
-  recipes,
-  postFavorite,
-  auth,
-  favorites,
-  deleteFavorite,
-}) {
-  //alert(`recipes: ${recipes.map((recipe) => recipe.name)}`);
-  if (recipes) {
-    return (
-      <React.Fragment>
-        {recipes.map((recipe) => {
-          return (
-            <React.Fragment key={recipe._id}>
-              <div className="col-4 col-lg-3 d-none d-md-block">
-                <Card className="recipe-card mx-auto">
-                  <img
-                    class="card-img-top recipe-img"
-                    src={baseUrl + recipe.imageUrl}
-                  />
-                  <CardBody>
-                    <Link style={{ color: "black" }}>
-                      <h5>{recipe.recipeName}</h5>
-                    </Link>
-                    <p>{recipe.recipeDescription}</p>
-                    {console.log(favorites)}
-                    {auth.isAuthenticated && favorites.includes(recipe._id) ? (
-                      <Button onClick={() => deleteFavorite(recipe._id)}>
-                        Delete Favorite
-                      </Button>
-                    ) : (
-                      <Button onClick={() => postFavorite(recipe._id)}>
-                        <i className="fa fa-star" />
-                        Favorite
-                      </Button>
-                    )}
-
-                    <Link
-                      className="favorite-butt"
-                      style={{ color: "black" }}
-                    ></Link>
-                  </CardBody>
-                </Card>
-              </div>
-
-              <div className="recipe-container-sm  mx-auto d-block d-md-none">
-                <Col xs={12} className="recipe-box-sm">
-                  <Media>
-                    <Media left>
-                      <img
-                        className="d-flex recipe-img-sm"
-                        src={baseUrl + recipe.imageUrl}
-                      />
-                    </Media>
-
-                    <Media body className="recipe-sm-body">
-                      <Link style={{ color: "black" }}>
-                        <h5>{recipe.recipeName}</h5>
-                      </Link>
-                      <p>{recipe.recipeDescription}</p>
-                      {auth.isAuthenticated &&
-                      favorites.includes(recipe._id) ? (
-                        <Button onClick={() => deleteFavorite(recipe._id)}>
-                          Delete Favorite
-                        </Button>
-                      ) : (
-                        <Button onClick={() => postFavorite(recipe._id)}>
-                          <i className="fa fa-star" />
-                          Favorite
-                        </Button>
-                      )}
-                    </Media>
-                  </Media>
-                </Col>
-              </div>
-            </React.Fragment>
-          );
-        })}
-      </React.Fragment>
-    );
-  } else {
-    return <div className="col">Problem with object</div>;
   }
 }
 

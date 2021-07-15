@@ -200,7 +200,10 @@ class Main extends Component {
           <Route
             path="/mealplan"
             render={() => (
-              <MainMealplanPage userMealplan={this.props.userMealplan} />
+              <MainMealplanPage
+                userMealplan={this.props.userMealplan}
+                favorites={this.props.favorites.favorites}
+              />
             )}
           />
           <Route
