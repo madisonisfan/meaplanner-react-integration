@@ -63,12 +63,12 @@ function RenderButtons({ mealTypes, postRecipe, auth }) {
   return (
     <React.Fragment>
       <Row className="row justify-content-center">
-        <Col>
+        <Col xs={2}>
           {auth.isAuthenticated ? (
             <AddRecipeForm postRecipe={postRecipe} />
           ) : null}
         </Col>
-        <Col>
+        <Col xs={2}>
           {auth.isAuthenticated ? (
             <Button>
               <Link style={{ color: "black" }} to={"/favorites"}>
@@ -114,7 +114,10 @@ function RenderRecipeCard({
                     src={baseUrl + recipe.imageUrl}
                   />
                   <CardBody>
-                    <Link style={{ color: "black" }}>
+                    <Link
+                      style={{ color: "black" }}
+                      to={`/recipeDetails/${recipe._id}`}
+                    >
                       <h5>{recipe.recipeName}</h5>
                     </Link>
                     <p>{recipe.recipeDescription}</p>

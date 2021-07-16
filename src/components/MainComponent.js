@@ -9,6 +9,7 @@ import MainMealplanPage from "./MealPlanComponent";
 import FavoritesComponent from "./FavoritesComponent";
 import MyPosts from "./MyPostsComponent";
 import MyRecipes from "./MyRecipesComponent";
+import RecipeDetails from "./RecipeDetailsComponent";
 import {
   fetchPosts,
   fetchComments,
@@ -113,6 +114,15 @@ class Main extends Component {
   render() {
     // console.log("current user", this.props.auth.user.username);
 
+    const recipeAndDetails = ({ match }) => {
+      console.log("match", match.params.recipeId);
+      const recipe = this.props.recipes.recipes.filter(
+        (recipe) => recipe._id === match.params.recipeId
+      )[0];
+
+      return <RecipeDetails recipe={recipe} />;
+    };
+
     const RecipeWithMealType = ({ match }) => {
       let type = match.params.mealType;
       console.log("1st type: ", type);
@@ -212,6 +222,7 @@ class Main extends Component {
               />
             )}
           />
+          <Route path="/recipeDetails/:recipeId" component={recipeAndDetails} />
           <PrivateRoute
             exact
             path="/yourpage"

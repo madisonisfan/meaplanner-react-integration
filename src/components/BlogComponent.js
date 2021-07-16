@@ -240,14 +240,16 @@ class RenderPost extends Component {
               )}
             />
           </Col>
-          <Col xs={12}>
-            <Row style={{ marginTop: "10px" }}>
-              <RenderCommentForm
-                postId={this.props.post._id}
-                postComment={this.props.postComment}
-              />
-            </Row>
-          </Col>
+          {this.props.auth.isAuthenticated ? (
+            <Col xs={12}>
+              <Row style={{ marginTop: "10px" }}>
+                <RenderCommentForm
+                  postId={this.props.post._id}
+                  postComment={this.props.postComment}
+                />
+              </Row>
+            </Col>
+          ) : null}
         </Row>
 
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
