@@ -423,6 +423,166 @@ export const addPost = (post) => ({
   payload: post,
 });
 
+export const fetchComments = () => (dispatch) => {
+  return fetch(baseUrl + "comments")
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        const errMess = new Error(error.message);
+        throw errMess;
+      }
+    )
+    .then((response) => response.json())
+    .then((comments) => dispatch(addComments(comments)))
+    .catch((error) => dispatch(commentsFailed(error.message)));
+};
+
+export const postComment = (postId, commentContent) => (dispatch) => {
+  const newComment = {
+    post: postId,
+    commentContent,
+  };
+  newComment.commentDate = new Date().toISOString();
+  console.log("Comment ", newComment);
+
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return fetch(baseUrl + "comments", {
+    method: "POST",
+    body: JSON.stringify(newComment),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((comment) => dispatch(addComment(comment)))
+    .catch((error) => {
+      console.log("post comment", error.message);
+      alert("Your comment could not be posted\nError: " + error.message);
+    });
+};
+
+export const updateComment = (commentId, commentContent) => (dispatch) => {
+  const bearer = "Bearer " + localStorage.getItem("token");
+
+  return fetch(baseUrl + "comments/" + commentId, {
+    method: "PUT",
+    body: JSON.stringify(commentContent),
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+
+    .then(() => location.reload())
+    .catch((error) => {
+      console.log("comment err", error.message);
+      alert("Your comment could not be updated\nError: " + error.message);
+    });
+};
+
+export const removeComment = (commentId) => (dispatch) => {
+  const bearer = "Bearer " + localStorage.getItem("token");
+  console.log("comment id to remove", commentId);
+
+  return fetch(baseUrl + "comments/" + commentId, {
+    method: "DELETE",
+    headers: {
+      Authorization: bearer,
+    },
+    credentials: "same-origin",
+  })
+    .then(
+      (response) => {
+        if (response.ok) {
+          return response;
+        } else {
+          const error = new Error(
+            `Error ${response.status}: ${response.statusText}`
+          );
+          error.response = response;
+          throw error;
+        }
+      },
+      (error) => {
+        throw error;
+      }
+    )
+    .then((response) => response.json())
+    .then((commentDeleted) => {
+      console.log("Comment Deleted", commentDeleted);
+      dispatch(deleteComment(commentDeleted._id));
+      //dispatch(addFavorites(favorites));
+    })
+    .catch((error) => dispatch(commentsFailed(error.message)));
+};
+
+export const deleteComment = (commentId) => ({
+  type: ActionTypes.DELETE_COMMENT,
+  payload: commentId,
+});
+
+export const commentsFailed = (errMess) => ({
+  type: ActionTypes.COMMENTS_FAILED,
+  payload: errMess,
+});
+
+export const addComments = (comments) => ({
+  type: ActionTypes.ADD_COMMENTS,
+  payload: comments,
+});
+
+export const addComment = (comment) => ({
+  type: ActionTypes.ADD_COMMENT,
+  payload: comment,
+});
+
 export const fetchMealtypes = () => (dispatch) => {
   dispatch(addMealtypes(MEALTYPES));
 };

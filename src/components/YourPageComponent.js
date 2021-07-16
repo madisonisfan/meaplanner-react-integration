@@ -40,7 +40,11 @@ function MainYourPage({ userInfo }) {
             </Button>
           </Col>
           <Col className="d-flex justify-content-start">
-            <Button>Your Recipes</Button>
+            <Button>
+              <Link style={{ color: "black" }} to={"/myRecipes"}>
+                My Recipes
+              </Link>
+            </Button>
           </Col>
         </Row>
       </div>

@@ -62,21 +62,33 @@ function MainRecipePage({
 function RenderButtons({ mealTypes, postRecipe, auth }) {
   return (
     <React.Fragment>
-      {mealTypes.map((type) => (
-        <Button className="meal-type-button" key={type.id}>
-          <Link style={{ color: "black" }} to={`/recipes/${type.mealType}`}>
-            {type.title}
-          </Link>
-        </Button>
-      ))}
-      {auth.isAuthenticated ? <AddRecipeForm postRecipe={postRecipe} /> : null}
-      {auth.isAuthenticated ? (
-        <Button>
-          <Link style={{ color: "black" }} to={"/favorites"}>
-            My Favorites
-          </Link>
-        </Button>
-      ) : null}
+      <Row className="row justify-content-center">
+        <Col>
+          {auth.isAuthenticated ? (
+            <AddRecipeForm postRecipe={postRecipe} />
+          ) : null}
+        </Col>
+        <Col>
+          {auth.isAuthenticated ? (
+            <Button>
+              <Link style={{ color: "black" }} to={"/favorites"}>
+                My Favorites
+              </Link>
+            </Button>
+          ) : null}
+        </Col>
+      </Row>
+      <Row>
+        <Col>
+          {mealTypes.map((type) => (
+            <Button className="meal-type-button" key={type.id}>
+              <Link style={{ color: "black" }} to={`/recipes/${type.mealType}`}>
+                {type.title}
+              </Link>
+            </Button>
+          ))}
+        </Col>
+      </Row>
     </React.Fragment>
   );
 }

@@ -168,6 +168,25 @@ body {
 .create-post-header {
 }
 
+.comment-card {
+  background-color: rgba(211, 211, 211, 0.507);
+  border-radius: 30px;
+  border: none;
+  height: 90px;
+}
+
+.comment-card-body {
+  padding: 15px;
+}
+
+.comment-input-box {
+  width: 100%;
+  border-radius: 30px;
+  background-color: rgba(211, 211, 211, 0.507);
+  border: none;
+  height: 35px;
+}
+
 .modal-header {
   text-align: center;
 }

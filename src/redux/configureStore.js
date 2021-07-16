@@ -10,6 +10,7 @@ import { InitialPostForm } from "./forms";
 import { UserMealplan } from "./userMealplanReducer";
 import { Favorites } from "./favoritesReducer";
 import { Likes } from "./likesReducer";
+import { Comments } from "./commentsReducer";
 import { Auth } from "./auth";
 
 const rootReducer = combineReducers({
@@ -20,6 +21,7 @@ const rootReducer = combineReducers({
   userMealplan: UserMealplan,
   favorites: Favorites,
   likes: Likes,
+  comments: Comments,
   auth: Auth,
   ...createForms({
     postForm: InitialPostForm,

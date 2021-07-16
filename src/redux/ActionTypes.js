@@ -4,6 +4,11 @@ export const POSTS_LOADING = "POSTS_LOADING";
 export const POSTS_FAILED = "POSTS_FAILED";
 export const DELETE_POST = "DELETE_POST";
 
+export const ADD_COMMENTS = "ADD_COMMENTS";
+export const COMMENTS_FAILED = "COMMENTS_FAILED";
+export const ADD_COMMENT = "ADD_COMMENT";
+export const DELETE_COMMENT = "DELETE_COMMENT";
+
 export const ADD_LIKES = "ADD_LIKES";
 export const ADD_LIKE = "ADD_LIKE";
 export const DELETE_LIKE = "DELETE_LIKE";

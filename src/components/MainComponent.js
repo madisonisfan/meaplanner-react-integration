@@ -8,8 +8,13 @@ import MainRecipePage from "./RecipePageComponent";
 import MainMealplanPage from "./MealPlanComponent";
 import FavoritesComponent from "./FavoritesComponent";
 import MyPosts from "./MyPostsComponent";
+import MyRecipes from "./MyRecipesComponent";
 import {
   fetchPosts,
+  fetchComments,
+  postComment,
+  updateComment,
+  removeComment,
   postNewPost,
   deletePost,
   updatePost,
@@ -42,6 +47,7 @@ const mapStateToProps = (state) => {
     auth: state.auth,
     favorites: state.favorites,
     likes: state.likes,
+    comments: state.comments,
   };
 };
 
@@ -85,6 +91,11 @@ const mapDispatchToProps = {
   postFavorite: (recipeId) => postFavorite(recipeId),
   postLike: (postId) => postLike(postId),
   removeLike: (postId) => deleteLike(postId),
+  fetchComments: () => fetchComments(),
+  postComment: (postId, commentContent) => postComment(postId, commentContent),
+  updateComment: (commentId, commentContent) =>
+    updateComment(commentId, commentContent),
+  removeComment: (commentId) => removeComment(commentId),
 };
 
 class Main extends Component {
@@ -96,9 +107,12 @@ class Main extends Component {
     this.props.fetchUserMealplan();
     this.props.fetchFavorites();
     this.props.fetchLikes();
+    this.props.fetchComments();
   }
 
   render() {
+    // console.log("current user", this.props.auth.user.username);
+
     const RecipeWithMealType = ({ match }) => {
       let type = match.params.mealType;
       console.log("1st type: ", type);
@@ -191,6 +205,10 @@ class Main extends Component {
                 removeLike={this.props.removeLike}
                 likes={this.props.likes.likes}
                 currentUsername={this.props.auth}
+                comments={this.props.comments}
+                postComment={this.props.postComment}
+                updateComment={this.props.updateComment}
+                removeComment={this.props.removeComment}
               />
             )}
           />
@@ -248,6 +266,12 @@ class Main extends Component {
                 likes={this.props.likes.likes}
                 currentUsername={this.props.auth}
               />
+            )}
+          />
+          <Route
+            path="/myRecipes"
+            render={() => (
+              <MyRecipes recipes={this.props.recipes} auth={this.props.auth} />
             )}
           />
           <Redirect to="/home" />
