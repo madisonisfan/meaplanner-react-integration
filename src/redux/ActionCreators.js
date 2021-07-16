@@ -378,7 +378,7 @@ export const postNewPost = (postType, postContent) => (dispatch) => {
     postContent,
   };
 
-  newPost.postDate = new Date().toISOString();
+  newPost.postDate = new Date().toLocaleDateString();
 
   console.log("Post", newPost);
 
@@ -452,7 +452,9 @@ export const postComment = (postId, commentContent) => (dispatch) => {
     post: postId,
     commentContent,
   };
-  newComment.commentDate = new Date().toISOString();
+  //newComment.commentDate = new Date().toISOString();
+  newComment.commentDate = new Date().toLocaleDateString();
+
   console.log("Comment ", newComment);
 
   const bearer = "Bearer " + localStorage.getItem("token");

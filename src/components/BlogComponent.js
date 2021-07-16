@@ -321,7 +321,8 @@ class RenderComments extends Component {
                   <Col xs={10}>
                     <div>
                       <div>
-                        {comment.commentCreator.username} {comment.commentDate}
+                        {comment.commentCreator.username} {"      "}
+                        {comment.commentDate}
                       </div>
                     </div>
                   </Col>
