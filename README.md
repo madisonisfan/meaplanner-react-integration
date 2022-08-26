@@ -1,4 +1,4 @@
-# MealPlanner React App - intergrated with server 
+# MealPlanner React App - integrated with server 
 
 In 2020 I participated in Nucamp's Full-Stack bootcamp. In the second course, we created dynamic web applications with React, and in the last phase, we were taught how to develop a backend with NodeJS.
 
