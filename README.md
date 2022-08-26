@@ -1,4 +1,4 @@
-# MealPlanner React App - integrated with server 
+# MealPlanner - React app integrated with server 
 
 In 2020 I participated in Nucamp's Full-Stack bootcamp. In the second course, we created dynamic web applications with React, and in the last phase, we were taught how to develop a backend with NodeJS.
 
@@ -113,7 +113,7 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
--->
+
 
 ### Deployment
 
@@ -124,5 +124,5 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
 
 
-
+-->
 
