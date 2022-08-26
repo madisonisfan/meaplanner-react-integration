@@ -1,9 +1,24 @@
-# Getting Started with Create React App
+# MealPlanner React App - intergrated with server 
+
+In 2020 I participated in Nucamp's Full-Stack bootcamp. In the second course, we created dynamic web applications with React, and in the last phase, we were taught how to develop a backend with NodeJS.
+
+This project is the front-end to my meal planning react application. There is a server connected to this app. [Go to server respository](https://github.com/madisonisfan/meaplannerServer-integration)
+
+# Technologies 
+This app is missing some features and needs to be updated. 
+
+- React
+- React Router 
+- Redux + Redux Thunk + Redux Logger 
+- Reactstrap
+- React Popper 
+- Font Awesome 
 
 
 
 <!--
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Getting Started with Create React App
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). --> 
 
 ## Available Scripts
 
@@ -33,6 +48,8 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `yarn eject`
+
+<!--
 
 **Note: this is a one-way operation. Once you `eject`, you can’t go back!**
 
@@ -64,6 +81,8 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/m
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
+-->
+
 ### Deployment
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
@@ -74,4 +93,4 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 
 
--->
+
