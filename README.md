@@ -2,9 +2,41 @@
 
 In 2020 I participated in Nucamp's Full-Stack bootcamp. In the second course, we created dynamic web applications with React, and in the last phase, we were taught how to develop a backend with NodeJS.
 
-This project is the front end of my meal planning react application. There is a server connected to this app. [Go to the server repository.](https://github.com/madisonisfan/meaplannerServer-integration)
+This project is the front end of my Meal Planner React application. There is a server connected to this app. [Go to the server repository.](https://github.com/madisonisfan/meaplannerServer-integration)
 
-# Technologies
+
+
+
+# Table Of Contents
+- [My Inspiration](#my-inspiration)
+- [Features](#features)
+- [Project Confusion](#project-confusion)
+- [Technologies](#technologies)
+- [Available Scripts](#available-scripts)
+
+
+
+## My Inspiration
+For almost my entire life I've had a passion for health and fitness. Like most people, I found it difficult to find healthy foods that I enjoy and to stay consistent with healthy eating. My goal is to create a place for people to go where they can organize their weekly meal plans, and be motivated by the community integrated with the site. To help with finding food options for everyone, I created a feature that allows anyone to add a recipe to the site. With everyone adding recipes, there would be an extensive list of food.  
+
+## Features
+- Recipe Page: Here, users can view all recipes and sort the recipes by meal type (ex: Breakfast). From here, users can also choose to add a recipe to the site, and favorite recipes from the lists. 
+- Mealplan Page: This page is where users can view and edit their meal plan for the week. 
+- Blog: To create a community, I added a blog feature that allows users to interact with each other. People can create posts and view and comment on each other's posts. 
+- Profile Page: Here users can view and edit their details, such as recipes 
+
+## Project Confusion
+Why are there so many repositories?: 
+- The bootcamp was separated into 4 courses. The 2nd was React, and the last was Backend. 
+- In the React course, I created this Meal Planner React app and it is not integrated with a server. 
+- In the backend course, I created a Meal Planner server not integrated with a React app
+- As an extra, we were taught to integrate a React app with a server. But to do so, we created separate projects which were copies of our react app and server, but with a few new additions.
+## Links to Similar Repositories
+- [View Meal Planner server not integrated with this web app](https://github.com/madisonisfan/meaplanner-node-express-mongodb)
+- [View Meal Planner app edited to be integrated with Meal Planner server](https://github.com/madisonisfan/meaplanner-react-integration)
+- [View Meal Planner server edited to be integrated with Meal Planner web app](https://github.com/madisonisfan/meaplanner-server-integration)
+
+## Technologies
 This app is missing some features and needs to be updated.
 - React
 - React Router
@@ -12,12 +44,6 @@ This app is missing some features and needs to be updated.
 - Reactstrap
 - React Popper
 - Font Awesome
-
-
-
-<!--
-# Getting Started with Create React App
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). --> 
 
 ## Available Scripts
 
@@ -45,6 +71,13 @@ The build is minified and the filenames include the hashes.\
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+<!--
+# Getting Started with Create React App
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app). --> 
+
+## Available Scripts
+
+
 
 ### `yarn eject`
 
