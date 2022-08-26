@@ -1,18 +1,16 @@
 # MealPlanner React App - intergrated with server 
 
 In 2020 I participated in Nucamp's Full-Stack bootcamp. In the second course, we created dynamic web applications with React, and in the last phase, we were taught how to develop a backend with NodeJS.
+This project is the front end of my meal planning react application. There is a server connected to this app. [Go to the server repository.](https://github.com/madisonisfan/meaplannerServer-integration)
 
-This project is the front-end to my meal planning react application. There is a server connected to this app. [Go to server respository](https://github.com/madisonisfan/meaplannerServer-integration)
-
-# Technologies 
-This app is missing some features and needs to be updated. 
-
+# Technologies
+This app is missing some features and needs to be updated.
 - React
-- React Router 
-- Redux + Redux Thunk + Redux Logger 
+- React Router
+- Redux + Redux Thunk + Redux Logger
 - Reactstrap
-- React Popper 
-- Font Awesome 
+- React Popper
+- Font Awesome
 
 
 
