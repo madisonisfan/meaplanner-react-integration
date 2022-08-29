@@ -10,9 +10,9 @@ This project is the front end of my Meal Planner React application. There is a s
 # Table Of Contents
 - [My Inspiration](#my-inspiration)
 - [Features](#features)
-- [Project Confusion](#project-confusion)
 - [Technologies](#technologies)
-- [Available Scripts](#available-scripts)
+- [Installation And Usage](#installation-and-usage)
+-  [Project Confusion](#project-confusion)
 
 
 
@@ -25,6 +25,26 @@ For almost my entire life I've had a passion for health and fitness. Like most p
 - Blog: To create a community, I added a blog feature that allows users to interact with each other. People can create posts and view and comment on each other's posts. 
 - Profile Page: Here users can view and edit their details, such as recipes 
 
+
+
+## Technologies
+This app is missing some features and needs to be updated.
+- React
+- React Router
+- Redux + Redux Thunk + Redux Logger
+- Reactstrap
+- React Popper
+- Font Awesome
+
+
+## Installation and Usage
+In the project directory, you can run:
+
+Install dependencies: `yarn install` or `npm install`
+
+To run: `yarn start` or `npm start`
+
+
 ## Project Confusion
 Why are there so many repositories?: 
 - The bootcamp was separated into 4 courses. The 2nd was React, and the last was Backend. 
@@ -36,14 +56,7 @@ Why are there so many repositories?:
 - [View Meal Planner app edited to be integrated with Meal Planner server](https://github.com/madisonisfan/meaplanner-react-integration)
 - [View Meal Planner server edited to be integrated with Meal Planner web app](https://github.com/madisonisfan/meaplanner-server-integration)
 
-## Technologies
-This app is missing some features and needs to be updated.
-- React
-- React Router
-- Redux + Redux Thunk + Redux Logger
-- Reactstrap
-- React Popper
-- Font Awesome
+<!--
 
 ## Available Scripts
 
@@ -69,7 +82,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 The build is minified and the filenames include the hashes.\
 
-<!--
+
 
 Your app is ready to be deployed!
 
